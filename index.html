@@ -67,6 +67,7 @@
     .nav-links {
       display: flex;
       gap: 1.5rem;
+      align-items: center;
     }
     
     .nav-link {
@@ -94,6 +95,25 @@
     
     .nav-link:hover::after {
       width: 100%;
+    }
+    
+    .lang-switcher {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: var(--text);
+      padding: 0.4rem 0.8rem;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .lang-switcher:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: var(--primary);
     }
     
     /* 主标题 */
@@ -273,9 +293,27 @@
     }
     
     .password-note {
-      font-size: 0.8rem;
-      color: #aaa;
-      margin-top: 0.5rem;
+      font-size: 0.85rem;
+      color: #e0e0e0;
+      margin-top: 0.8rem;
+      padding: 0.4rem 0.8rem;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 6px;
+      display: inline-block;
+    }
+    
+    .password-note .password-label {
+      font-weight: 600;
+      color: var(--secondary);
+    }
+    
+    .password-note .password-value {
+      font-family: 'Courier New', monospace;
+      font-weight: bold;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      margin-left: 0.3rem;
     }
     
     footer {
@@ -286,120 +324,21 @@
       border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
     
-    /* 联系页面样式 */
-    .contact-container {
-      max-width: 600px;
-    }
-    
-    .contact-card {
-      background: var(--card);
-      border-radius: 12px;
-      padding: 2rem;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      position: relative;
-      overflow: hidden;
-      margin-top: 1.5rem;
-    }
-    
-    .contact-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 4px;
-      background: var(--gradient);
-    }
-    
-    .contact-header {
+    .author-info {
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      margin-bottom: 1.5rem;
+      gap: 0.3rem;
     }
     
-    .contact-icon {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      background: var(--gradient);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-right: 15px;
-    }
-    
-    .contact-icon i {
-      color: white;
-      font-size: 1.5rem;
-    }
-    
-    .contact-title {
-      font-size: 1.8rem;
+    .author-label {
       font-weight: 600;
-      background: var(--gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    
-    .contact-info {
-      text-align: left;
-      margin-top: 1.5rem;
-    }
-    
-    .contact-item {
-      display: flex;
-      align-items: center;
-      margin-bottom: 1.2rem;
-      padding: 0.8rem;
-      border-radius: 8px;
-      transition: background 0.3s;
-    }
-    
-    .contact-item:hover {
-      background: rgba(255, 255, 255, 0.05);
-    }
-    
-    .contact-item i {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: rgba(0, 124, 255, 0.1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-right: 15px;
       color: var(--primary);
     }
     
-    .contact-details h3 {
-      font-size: 1.1rem;
-      margin-bottom: 0.3rem;
-    }
-    
-    .contact-details p {
+    .author-name {
+      font-weight: 500;
       color: #aaa;
-      font-size: 0.9rem;
-    }
-    
-    .back-btn {
-      margin-top: 1.5rem;
-      display: inline-flex;
-      align-items: center;
-      padding: 10px 20px;
-      border-radius: 30px;
-      background: transparent;
-      color: var(--text);
-      font-weight: 600;
-      text-decoration: none;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      transition: all 0.3s;
-    }
-    
-    .back-btn:hover {
-      background: rgba(255, 255, 255, 0.05);
-      border-color: var(--primary);
     }
     
     /* 响应式设计 */
@@ -451,16 +390,6 @@
         max-width: 250px;
         justify-content: center;
       }
-      
-      .contact-header {
-        flex-direction: column;
-        text-align: center;
-      }
-      
-      .contact-icon {
-        margin-right: 0;
-        margin-bottom: 15px;
-      }
     }
   </style>
 </head>
@@ -469,8 +398,12 @@
   <div class="navbar">
     <div class="nav-brand">Key Strike</div>
     <div class="nav-links">
-      <a href="index.html" class="nav-link">首页</a>
-      <a href="contact.html" class="nav-link">联系作者</a>
+      <a href="index.html" class="nav-link" data-lang="home">首页</a>
+      <a href="contact.html" class="nav-link" data-lang="contact">联系作者</a>
+      <div class="lang-switcher" id="lang-switcher">
+        <i class="fas fa-globe"></i>
+        <span data-lang="lang-en">EN</span>/<span data-lang="lang-zh">中文</span>
+      </div>
     </div>
   </div>
   
@@ -489,18 +422,18 @@
           <h2 class="version-title">Key Strike Voker</h2>
         </div>
         <div class="version-badges">
-          <span class="badge badge-new">最新版本</span>
-          <span class="badge badge-stable">稳定版</span>
+          <span class="badge badge-new" data-lang="badge-new">最新版本</span>
+          <span class="badge badge-stable" data-lang="badge-stable">稳定版</span>
         </div>
         <div class="btn-group">
           <a class="btn" href="https://github.com/Rex2516S/key-strike" target="_blank">
-            <i class="fab fa-github"></i> Github
+            <i class="fab fa-github"></i> <span data-lang="btn-github">Github</span>
           </a>
           <a class="btn" href="https://wwye.lanzouu.com/i6UkJ3a1buij" target="_blank">
-            <i class="fas fa-download"></i> Key Strike Voker
+            <i class="fas fa-download"></i> <span data-lang="btn-download">Key Strike Voker</span>
           </a>
           <a class="btn" href="https://wwye.lanzouu.com/iFyBa3a1bgjg" target="_blank">
-            <i class="fas fa-code"></i> Python 代码
+            <i class="fas fa-code"></i> <span data-lang="btn-python">Python 代码</span>
           </a>
         </div>
       </div>
@@ -514,14 +447,14 @@
           <h2 class="version-title">Key Strike V2.1</h2>
         </div>
         <div class="version-badges">
-          <span class="badge badge-stable">稳定版</span>
+          <span class="badge badge-stable" data-lang="badge-stable">稳定版</span>
         </div>
         <div class="btn-group">
           <a class="btn" href="https://github.com/Rex2516S/key-strike" target="_blank">
-            <i class="fab fa-github"></i> Github
+            <i class="fab fa-github"></i> <span data-lang="btn-github">Github</span>
           </a>
           <a class="btn" href="https://wwye.lanzouu.com/ilMV039t2m0b" target="_blank">
-            <i class="fas fa-code"></i> Python 代码
+            <i class="fas fa-code"></i> <span data-lang="btn-python">Python 代码</span>
           </a>
         </div>
       </div>
@@ -535,20 +468,23 @@
           <h2 class="version-title">Key Strike V2.0</h2>
         </div>
         <div class="version-badges">
-          <span class="badge badge-legacy">稳定版</span>
+          <span class="badge badge-legacy" data-lang="badge-legacy">经典版</span>
         </div>
         <div class="btn-group">
           <a class="btn" href="https://github.com/Rex2516S/key-strike" target="_blank">
-            <i class="fab fa-github"></i> Github
+            <i class="fab fa-github"></i> <span data-lang="btn-github">Github</span>
           </a>
           <a class="btn" href="https://wwye.lanzouu.com/iZ64A39s03od" target="_blank">
-            <i class="fas fa-download"></i> Key Strike V2.0
+            <i class="fas fa-download"></i> <span data-lang="btn-download">Key Strike V2.0</span>
           </a>
           <a class="btn" href="https://wwye.lanzouu.com/iex7C39s04xi" target="_blank">
-            <i class="fas fa-code"></i> Python 代码
+            <i class="fas fa-code"></i> <span data-lang="btn-python">Python 代码</span>
           </a>
         </div>
-        <p class="password-note">提取密码: c6bw</p>
+        <p class="password-note">
+          <span class="password-label" data-lang="password-label">提取密码</span>: 
+          <span class="password-value">c6bw</span>
+        </p>
       </div>
 
       <!-- V1.0 -->
@@ -560,26 +496,99 @@
           <h2 class="version-title">Key Strike V1.0</h2>
         </div>
         <div class="version-badges">
-          <span class="badge badge-legacy">初始版</span>
+          <span class="badge badge-legacy" data-lang="badge-legacy">初始版</span>
         </div>
         <div class="btn-group">
           <a class="btn" href="https://github.com/Rex2516S/key-strike" target="_blank">
-            <i class="fab fa-github"></i> Github
+            <i class="fab fa-github"></i> <span data-lang="btn-github">Github</span>
           </a>
           <a class="btn" href="https://wwye.lanzouu.com/i7CUx39rjpwb" target="_blank">
-            <i class="fas fa-download"></i> Key Strike V1.0
+            <i class="fas fa-download"></i> <span data-lang="btn-download">Key Strike V1.0</span>
           </a>
           <a class="btn" href="https://wwye.lanzouu.com/iAPSJ39rjr9a" target="_blank">
-            <i class="fas fa-code"></i> Python 代码
+            <i class="fas fa-code"></i> <span data-lang="btn-python">Python 代码</span>
           </a>
         </div>
-        <p class="password-note">提取密码: fba4</p>
+        <p class="password-note">
+          <span class="password-label" data-lang="password-label">提取密码</span>: 
+          <span class="password-value">fba4</span>
+        </p>
       </div>
     </div>
 
     <footer>
-      <p>Author: kyle_A_10000</p>
+      <div class="author-info">
+        <span class="author-label" data-lang="footer-author">作者</span>
+        <span class="author-name">kyle_A_10000</span>
+      </div>
     </footer>
   </div>
+
+  <script>
+    // 语言配置
+    const translations = {
+      'zh': {
+        'home': '首页',
+        'contact': '联系作者',
+        'lang-en': 'EN',
+        'lang-zh': '中文',
+        'subtitle': '高效、易用的键盘宏录制工具',
+        'badge-new': '最新版本',
+        'badge-stable': '稳定版',
+        'badge-legacy': '经典版',
+        'btn-github': 'Github',
+        'btn-download': '下载',
+        'btn-python': 'Python 代码',
+        'password-label': '提取密码',
+        'footer-author': '作者'
+      },
+      'en': {
+        'home': 'Home',
+        'contact': 'Contact',
+        'lang-en': 'EN',
+        'lang-zh': '中文',
+        'subtitle': 'Efficient and easy-to-use keyboard macro recording tool',
+        'badge-new': 'Latest Version',
+        'badge-stable': 'Stable',
+        'badge-legacy': 'Legacy',
+        'btn-github': 'Github',
+        'btn-download': 'Download',
+        'btn-python': 'Python Code',
+        'password-label': 'Password',
+        'footer-author': 'Author'
+      }
+    };
+
+    // 当前语言
+    let currentLang = localStorage.getItem('language') || 'zh';
+
+    // 切换语言函数
+    function switchLanguage(lang) {
+      currentLang = lang;
+      localStorage.setItem('language', lang);
+      
+      // 更新所有带有data-lang属性的元素
+      document.querySelectorAll('[data-lang]').forEach(element => {
+        const key = element.getAttribute('data-lang');
+        if (translations[lang][key]) {
+          element.textContent = translations[lang][key];
+        }
+      });
+      
+      // 更新页面语言属性
+      document.documentElement.lang = lang;
+    }
+
+    // 初始化语言
+    document.addEventListener('DOMContentLoaded', () => {
+      switchLanguage(currentLang);
+      
+      // 添加语言切换事件
+      document.getElementById('lang-switcher').addEventListener('click', () => {
+        const newLang = currentLang === 'zh' ? 'en' : 'zh';
+        switchLanguage(newLang);
+      });
+    });
+  </script>
 </body>
 </html>

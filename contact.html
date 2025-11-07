@@ -67,6 +67,7 @@
     .nav-links {
       display: flex;
       gap: 1.5rem;
+      align-items: center;
     }
     
     .nav-link {
@@ -94,6 +95,25 @@
     
     .nav-link:hover::after {
       width: 100%;
+    }
+    
+    .lang-switcher {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: var(--text);
+      padding: 0.4rem 0.8rem;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .lang-switcher:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: var(--primary);
     }
     
     /* 联系页面样式 */
@@ -239,8 +259,12 @@
   <div class="navbar">
     <div class="nav-brand">Key Strike</div>
     <div class="nav-links">
-      <a href="index.html" class="nav-link">首页</a>
-      <a href="contact.html" class="nav-link">联系作者</a>
+      <a href="index.html" class="nav-link" data-lang="home">首页</a>
+      <a href="contact.html" class="nav-link" data-lang="contact">联系作者</a>
+      <div class="lang-switcher" id="lang-switcher">
+        <i class="fas fa-globe"></i>
+        <span data-lang="lang-en">EN</span>/<span data-lang="lang-zh">中文</span>
+      </div>
     </div>
   </div>
   
@@ -250,14 +274,14 @@
         <div class="contact-icon">
           <i class="fas fa-user"></i>
         </div>
-        <h2 class="contact-title">联系作者</h2>
+        <h2 class="contact-title" data-lang="contact-title">联系作者</h2>
       </div>
       
       <div class="contact-info">
         <div class="contact-item">
           <i class="fas fa-user-circle"></i>
           <div class="contact-details">
-            <h3>作者</h3>
+            <h3 data-lang="contact-author">作者</h3>
             <p>kyle_A_10000</p>
           </div>
         </div>
@@ -265,9 +289,9 @@
         <div class="contact-item">
           <i class="fas fa-envelope"></i>
           <div class="contact-details">
-            <h3>邮箱</h3>
+            <h3 data-lang="contact-email">邮箱</h3>
             <p>Rex2516@163.com</p>
-            <h3>QQ</h3>
+            <h3 data-lang="contact-qq">QQ</h3>
             <p>3606076796</p>
           </div>
         </div>
@@ -275,7 +299,7 @@
         <div class="contact-item">
           <i class="fab fa-github"></i>
           <div class="contact-details">
-            <h3>GitHub</h3>
+            <h3 data-lang="contact-github">GitHub</h3>
             <p>github.com/Rex2516S</p>
           </div>
         </div>
@@ -283,24 +307,93 @@
         <div class="contact-item">
           <i class="fas fa-comments"></i>
           <div class="contact-details">
-            <h3>反馈与建议</h3>
-            <p>欢迎通过GitHub Issues提交问题或建议 或联系qq</p>
+            <h3 data-lang="contact-feedback">反馈与建议</h3>
+            <p data-lang="contact-feedback-desc">欢迎通过GitHub Issues提交问题或建议 或联系qq</p>
           </div>
         </div>
         
         <div class="contact-item">
           <i class="fas fa-code-branch"></i>
           <div class="contact-details">
-            <h3>开源协议</h3>
-            <p>本项目遵循MIT开源协议</p>
+            <h3 data-lang="contact-license">开源协议</h3>
+            <p data-lang="contact-license-desc">本项目遵循MIT开源协议</p>
           </div>
         </div>
       </div>
       
       <a href="index.html" class="back-btn">
-        <i class="fas fa-arrow-left"></i> 返回首页
+        <i class="fas fa-arrow-left"></i> <span data-lang="back-home">返回首页</span>
       </a>
     </div>
   </div>
+
+  <script>
+    // 语言配置
+    const translations = {
+      'zh': {
+        'home': '首页',
+        'contact': '联系作者',
+        'lang-en': 'EN',
+        'lang-zh': '中文',
+        'contact-title': '联系作者',
+        'contact-author': '作者',
+        'contact-email': '邮箱',
+        'contact-qq': 'QQ',
+        'contact-github': 'GitHub',
+        'contact-feedback': '反馈与建议',
+        'contact-feedback-desc': '欢迎通过GitHub Issues提交问题或建议 或联系qq',
+        'contact-license': '开源协议',
+        'contact-license-desc': '本项目遵循MIT开源协议',
+        'back-home': '返回首页'
+      },
+      'en': {
+        'home': 'Home',
+        'contact': 'Contact',
+        'lang-en': 'EN',
+        'lang-zh': '中文',
+        'contact-title': 'Contact Author',
+        'contact-author': 'Author',
+        'contact-email': 'Email',
+        'contact-qq': 'QQ',
+        'contact-github': 'GitHub',
+        'contact-feedback': 'Feedback & Suggestions',
+        'contact-feedback-desc': 'Welcome to submit issues or suggestions via GitHub Issues or contact QQ',
+        'contact-license': 'Open Source License',
+        'contact-license-desc': 'This project follows the MIT open source license',
+        'back-home': 'Back to Home'
+      }
+    };
+
+    // 当前语言
+    let currentLang = localStorage.getItem('language') || 'zh';
+
+    // 切换语言函数
+    function switchLanguage(lang) {
+      currentLang = lang;
+      localStorage.setItem('language', lang);
+      
+      // 更新所有带有data-lang属性的元素
+      document.querySelectorAll('[data-lang]').forEach(element => {
+        const key = element.getAttribute('data-lang');
+        if (translations[lang][key]) {
+          element.textContent = translations[lang][key];
+        }
+      });
+      
+      // 更新页面语言属性
+      document.documentElement.lang = lang;
+    }
+
+    // 初始化语言
+    document.addEventListener('DOMContentLoaded', () => {
+      switchLanguage(currentLang);
+      
+      // 添加语言切换事件
+      document.getElementById('lang-switcher').addEventListener('click', () => {
+        const newLang = currentLang === 'zh' ? 'en' : 'zh';
+        switchLanguage(newLang);
+      });
+    });
+  </script>
 </body>
 </html>
