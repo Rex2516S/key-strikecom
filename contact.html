@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>联系作者 - Key Strike</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="author" content="kyle_A_10000">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --card: #1a1a1a;
+      --text: #f5f5f5;
+      --primary: #007cff;
+      --secondary: #00c853;
+      --accent: #ff4081;
+      --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      display: flex;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.6;
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(0, 124, 255, 0.05) 0%, transparent 20%),
+        radial-gradient(circle at 90% 80%, rgba(0, 200, 83, 0.05) 0%, transparent 20%);
+    }
+    
+    .container {
+      margin: auto;
+      width: 90%;
+      max-width: 800px;
+      text-align: center;
+      padding: 2rem 0;
+    }
+    
+    /* 导航栏 */
+    .navbar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 1.5rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+    }
+    
+    .nav-brand {
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+    
+    .nav-link {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+      position: relative;
+    }
+    
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--gradient);
+      transition: width 0.3s;
+    }
+    
+    .nav-link:hover {
+      color: var(--primary);
+    }
+    
+    .nav-link:hover::after {
+      width: 100%;
+    }
+    
+    /* 联系页面样式 */
+    .contact-container {
+      max-width: 600px;
+    }
+    
+    .contact-card {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      position: relative;
+      overflow: hidden;
+      margin-top: 1.5rem;
+    }
+    
+    .contact-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: var(--gradient);
+    }
+    
+    .contact-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+    
+    .contact-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: var(--gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 15px;
+    }
+    
+    .contact-icon i {
+      color: white;
+      font-size: 1.5rem;
+    }
+    
+    .contact-title {
+      font-size: 1.8rem;
+      font-weight: 600;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .contact-info {
+      text-align: left;
+      margin-top: 1.5rem;
+    }
+    
+    .contact-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1.2rem;
+      padding: 0.8rem;
+      border-radius: 8px;
+      transition: background 0.3s;
+    }
+    
+    .contact-item:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+    
+    .contact-item i {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(0, 124, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 15px;
+      color: var(--primary);
+    }
+    
+    .contact-details h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.3rem;
+    }
+    
+    .contact-details p {
+      color: #aaa;
+      font-size: 0.9rem;
+    }
+    
+    .back-btn {
+      margin-top: 1.5rem;
+      display: inline-flex;
+      align-items: center;
+      padding: 10px 20px;
+      border-radius: 30px;
+      background: transparent;
+      color: var(--text);
+      font-weight: 600;
+      text-decoration: none;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.3s;
+    }
+    
+    .back-btn:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: var(--primary);
+    }
+    
+    /* 响应式设计 */
+    @media (max-width: 768px) {
+      .navbar {
+        padding: 1rem;
+      }
+      
+      .nav-links {
+        gap: 1rem;
+      }
+      
+      .contact-header {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .contact-icon {
+        margin-right: 0;
+        margin-bottom: 15px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="navbar">
+    <div class="nav-brand">Key Strike</div>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">首页</a>
+      <a href="contact.html" class="nav-link">联系作者</a>
+    </div>
+  </div>
+  
+  <div class="container contact-container">
+    <div class="contact-card">
+      <div class="contact-header">
+        <div class="contact-icon">
+          <i class="fas fa-user"></i>
+        </div>
+        <h2 class="contact-title">联系作者</h2>
+      </div>
+      
+      <div class="contact-info">
+        <div class="contact-item">
+          <i class="fas fa-user-circle"></i>
+          <div class="contact-details">
+            <h3>作者</h3>
+            <p>kyle_A_10000</p>
+          </div>
+        </div>
+        
+        <div class="contact-item">
+          <i class="fas fa-envelope"></i>
+          <div class="contact-details">
+            <h3>邮箱</h3>
+            <p>Rex2516@163.com</p>
+            <h3>QQ</h3>
+            <p>3606076796</p>
+          </div>
+        </div>
+        
+        <div class="contact-item">
+          <i class="fab fa-github"></i>
+          <div class="contact-details">
+            <h3>GitHub</h3>
+            <p>github.com/Rex2516S</p>
+          </div>
+        </div>
+        
+        <div class="contact-item">
+          <i class="fas fa-comments"></i>
+          <div class="contact-details">
+            <h3>反馈与建议</h3>
+            <p>欢迎通过GitHub Issues提交问题或建议 或联系qq</p>
+          </div>
+        </div>
+        
+        <div class="contact-item">
+          <i class="fas fa-code-branch"></i>
+          <div class="contact-details">
+            <h3>开源协议</h3>
+            <p>本项目遵循MIT开源协议</p>
+          </div>
+        </div>
+      </div>
+      
+      <a href="index.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> 返回首页
+      </a>
+    </div>
+  </div>
+</body>
+</html>
